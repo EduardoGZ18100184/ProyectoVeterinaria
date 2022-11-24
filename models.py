@@ -12,6 +12,7 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     mascotas = db.relationship('Mascota', backref='user')
+    citas = db.relationship('Cita', backref='user')         #Add 24-11-22
 
     def __init__(self, email, password, admin=False):
         self.email = email
@@ -58,28 +59,30 @@ class Mascota(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     raza = db.Column(db.String(250))
     tipo = db.Column(db.String(250))
+    citas = db.relationship('Cita', backref='mascota') #Add 24-11-22
 
     def __str__(self) -> str:
         return (f'ID : {self.id} ,'
                 f'Nombre : {self.nombre} ,'
+                f'Dueño : {self.user_id} ,' #Add 23-11-22
                 f'Raza: {self.apellido} ,'
                 f'Tipo: {self.email}'
         )
 
 #Clase Cita
+class Cita(db.Model):
+    __tablename__ = 'cita' 
 
-# class Cita(db.Model):
-#     __tablename__ = 'cita' 
+    id = db.Column(db.Integer,primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    mascota_id = db.column(db.Integer, db.ForeignKey('Mascotas.id'))
+    fecha = db.Column(db.DateTime)
+    status = db.Column(db.String(250))
 
-#     id = db.Column(db.Integer,primary_key=True)
-#     nombre = db.Column(db.String(250))
-#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-#     raza = db.Column(db.String(250))
-#     tipo = db.Column(db.String(250))
-
-#     def __str__(self) -> str:
-#         return (f'ID : {self.id} ,'
-#                 f'Nombre : {self.nombre} ,'
-#                 f'Raza: {self.apellido} ,'
-#                 f'Tipo: {self.email}'
-#         )
+    def __str__(self) -> str:
+        return (f'ID : {self.id} ,'
+                f'Dueño : {self.user_id} ,'
+                f'Mascota : {self.mascota_id} ,'
+                f'Fecha: {self.fecha} ,'
+                f'Status: {self.status}'
+        )
