@@ -11,6 +11,8 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(db.DateTime, nullable=False)
     admin = db.Column(db.Boolean, nullable=False, default=False)
+
+
     mascotas = db.relationship('Mascota', backref='user')
     citas = db.relationship('Cita', backref='user')         #Add 24-11-22
 
@@ -65,8 +67,8 @@ class Mascota(db.Model):
         return (f'ID : {self.id} ,'
                 f'Nombre : {self.nombre} ,'
                 f'Dueño : {self.user_id} ,' #Add 23-11-22
-                f'Raza: {self.apellido} ,'
-                f'Tipo: {self.email}'
+                f'Raza: {self.raza} ,'
+                f'Tipo: {self.tipo}'
         )
 
 #Clase Cita

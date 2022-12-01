@@ -1,5 +1,3 @@
-
-
 class BaseConfig:
     #Configuración de la bd
     USER_DB = 'postgres'
