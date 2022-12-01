@@ -75,7 +75,7 @@ class Cita(db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    mascota_id = db.column(db.Integer, db.ForeignKey('Mascotas.id'))
+    mascota_id = db.Column(db.Integer, db.ForeignKey('Mascotas.id'))
     fecha = db.Column(db.DateTime)
     status = db.Column(db.String(250))
 
