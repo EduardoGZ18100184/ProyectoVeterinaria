@@ -4,10 +4,13 @@ from models import Mascota
 from app import db,bcrypt
 from auth import tokenCheck
 from models import User #add 01-12-22
+from flask_login import login_required #add 02-12-22
 
 appmascota = Blueprint('appmascota',__name__,template_folder="templates")
 
+#Imprime todas las mascotas si el token que recibe es de un usuario admin
 @appmascota.route('/mascota/registro', methods =['POST'])
+@login_required
 def registro():
     mascota  = request.get_json()
     mascotaExists = Mascota.query.filter_by(id=mascota['id']).first()
@@ -24,7 +27,7 @@ def registro():
         mensaje="Mascota existente"     
     return jsonify({"message":mensaje})
 
-
+#Imprime las mascotas por usuario al recibir un token
 @appmascota.route('/mascotas', methods=['GET'])
 @tokenCheck
 def getAllPets(usuario):

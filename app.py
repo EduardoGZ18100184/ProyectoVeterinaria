@@ -27,9 +27,16 @@ migrate.init_app(app, db)
 def index():
     return render_template('index.html')
 
-#Agregando pagina de error
+#Agregando pagina de error 404
 def pagina_no_encontrada(error):
     return render_template('404.html')
 
 app.register_error_handler(404,pagina_no_encontrada)
 
+#Agregando pagina de error 400
+def peticion_mala(error):
+    return render_template('400.html')
+
+app.register_error_handler(400,peticion_mala)
+
+#RUTAS PROTEGIDAS

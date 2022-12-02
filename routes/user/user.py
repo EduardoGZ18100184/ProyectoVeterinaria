@@ -1,4 +1,4 @@
-from flask import Blueprint, request,jsonify
+from flask import Blueprint, request,jsonify, render_template
 from sqlalchemy import exc
 from models import User
 from app import db,bcrypt
@@ -6,6 +6,9 @@ from auth import tokenCheck
 
 appuser = Blueprint('appsuer',__name__,template_folder="templates")
 
+@appuser.route('/auth/registro')
+def registro_view():
+    return render_template('registro.html')
 
 @appuser.route('/auth/registro', methods =['POST'])
 def registro():
@@ -22,6 +25,10 @@ def registro():
     else:
         mensaje="Usuario existente"     
     return jsonify({"message":mensaje})
+
+@appuser.route('/auth/login')
+def login_view():
+    return render_template('login.html')
 
 @appuser.route('/auth/login' , methods =['POST'])
 def login():

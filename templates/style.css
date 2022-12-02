@@ -1,0 +1,60 @@
+/* estilos generales para toda la página */
+body {
+	font-family: 'Underdog', cursive;
+	margin: 0;
+}
+
+.bg-color-info {
+	background-color: rgb(244, 246, 251);
+}
+
+.font-color-general {
+	color: rgb(67, 105, 176);
+}
+
+.brand-name {
+	font-size: 1.8rem;
+	color: rgb(67, 105, 176);
+	margin-left: 2rem;
+}
+
+.bg-img-principal {
+	background-image: url("https://bosworthinstitute.com/wp-content/uploads/2020/07/veterinario-bosworth-carrera.png");
+	background-size: cover;
+	height: 650px;
+	background-position: center center;
+}
+
+
+.bg-color-azul {
+	background-color: rgb(67, 105, 176);
+}
+
+.hrblanco {
+	width: 10%;
+	background-color: white;
+}
+
+.hrazul {
+	width: 10%;
+	background-color: rgb(244, 246, 251);
+}
+
+
+/* estilos específicos para pantallas menores a 992px (menor que lg de bootstrap) */
+@media only screen and (max-width : 992px) {
+
+	.brand-name {
+		font-size: 1.8rem;
+		color: rgb(67, 105, 176);
+		margin-left: 1rem;
+	}
+
+	/* tenemos 1 imagen específica para móvil */
+	.bg-img-principal {
+		background-image: url("https://bosworthinstitute.com/wp-content/uploads/2020/07/veterinario-bosworth-carrera.png");
+		background-size: cover;
+		height: 500px;
+		background-position: center center;	
+	}	
+}
