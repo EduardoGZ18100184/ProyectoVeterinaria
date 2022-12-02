@@ -52,18 +52,24 @@ def getMascotasUser(usuario):
     output = []
     #mascotas = Mascota.query.all()
     #userExists = User.query.filter_by(id=usuario['id']).first()
-    id_usuario = usuario['registered_on']
+    #id_usuario = usuario['registered_on']
     id_usuario = usuario['user_id']
     print('ID DEL USUARIO:')
-    print(str(usuario['email']))
+    #print(str(usuario['email']))
     print(id_usuario)
-    # mascotas = Mascota.query.filter_by(user_id=usuario['id']).first()
-    # for mascota in mascotas:
-    #     mascotaData = {}
-    #     mascotaData['id'] = mascota.id
-    #     mascotaData['nombre'] = mascota.nombre
-    #     mascotaData['id_duenio'] = mascota.user_id
-    #     mascotaData['raza'] = mascota.raza
-    #     mascotaData['tipo'] = mascota.tipo
-    #     output.append(mascotaData)
+    mascotas = Mascota.query.filter_by(user_id=id_usuario)#.first()
+    print(mascotas)
+
+    #print(dir(mascotas))
+    if mascotas is not None:
+        for mascota in mascotas:
+            mascotaData = {}
+            mascotaData['id'] = mascota.id
+            mascotaData['nombre'] = mascota.nombre
+            mascotaData['id_duenio'] = mascota.user_id
+            mascotaData['raza'] = mascota.raza
+            mascotaData['tipo'] = mascota.tipo
+            output.append(mascotaData)
+    else:
+        output.append('El usuario no tiene mascotas')
     return jsonify({'mascotas':output})
