@@ -33,25 +33,3 @@ def pagina_no_encontrada(error):
 
 app.register_error_handler(404,pagina_no_encontrada)
 
-# from flask import Flask, request,url_for,render_template,redirect
-# from database import db
-# from flask_migrate import Migrate
-
-# app = Flask(__name__)
-
-# #Configuracion de la BD 
-# USER_DB = 'postgres'
-# PASS_DB = 'admin'
-# URL_DB = 'localhost'
-# NAME_DB= 'veterinaria'
-# FULL_URL_DB = f'postgresql://{USER_DB}:{PASS_DB}@{URL_DB}/{NAME_DB}'
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = FULL_URL_DB
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# db.init_app(app)
-
-# #configurar migracion
-# migrate = Migrate()
-# migrate.init_app(app,db)
-
