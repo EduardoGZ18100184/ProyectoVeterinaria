@@ -41,6 +41,6 @@ def tokenCheck(f):
             return jsonify({'message': 'token is invalid'})
        except:
            return jsonify({'message': 'token is invalid'})
-       print("hi")
+       #print("hi")
        return f(info['data'], *args, **kwargs)
    return verificar
