@@ -40,3 +40,14 @@ def peticion_mala(error):
 app.register_error_handler(400,peticion_mala)
 
 #RUTAS PROTEGIDAS
+
+#prueba
+@app.route('/logeandose', methods =['POST'])
+def logeandose():
+    nombreUser = request.form['email'] #add 02-12-22
+    print('RECIBO NOMBRE DE USUARIO:')
+    print(nombreUser)
+    userPass = request.form['password'] #add 02-12-22
+    print('RECIBO LA PASS:')
+    print(userPass)
+    return "<h1>Bienvenido " + nombreUser + "</h1>"

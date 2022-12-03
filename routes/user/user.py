@@ -32,8 +32,13 @@ def login_view():
 
 @appuser.route('/auth/login' , methods =['POST'])
 def login():
+    nombreUser = request.form['email'] #add 02-12-22
+    print('RECIBO NOMBRE DE USUARIO:')
+    print(nombreUser)
+    userPass = request.form['password'] #add 02-12-22
     user  = request.get_json()
-    usuario = User(email=user["email"],password=user["password"])
+    #usuario = User(email=user["email"],password=user["password"])
+    usuario = User(email=nombreUser,password=userPass) #add 02-12-22
     searchUser = User.query.filter_by(email = usuario.email).first()
     if searchUser:
         validation = bcrypt.check_password_hash(searchUser.password,user["password"])
@@ -46,6 +51,9 @@ def login():
                 }
             return jsonify(responseObject)
     return jsonify({"message":"Datos incorrectos"})
+
+
+
 
 @appuser.route('/usuarios', methods=['GET'])
 @tokenCheck
