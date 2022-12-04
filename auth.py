@@ -26,21 +26,21 @@ def obtenerInfo(token):
 
 
 def tokenCheck(f):
-   @wraps(f)
-   def verificar(*args, **kwargs):
-       token = None
-       if 'token' in request.headers:
-           token = request.headers['token']
- 
-       if not token:
-           return jsonify({'message': 'token no encontrado'})
-       try:
-           info = obtenerInfo(token)
-           print(info)
-           if info['status'] == "fail":
+    @wraps(f)
+    def verificar(*args, **kwargs):
+        token = None
+        if 'token' in request.headers:
+            token = request.headers['token']
+
+        if not token:
+            return jsonify({'message': 'token no encontrado'})
+        try:
+            info = obtenerInfo(token)
+            print(info)
+            if info['status'] == "fail":
+                return jsonify({'message': 'token is invalid'})
+        except:
             return jsonify({'message': 'token is invalid'})
-       except:
-           return jsonify({'message': 'token is invalid'})
-       #print("hi")
-       return f(info['data'], *args, **kwargs)
-   return verificar
+        #print("hi")
+        return f(info['data'], *args, **kwargs)
+    return verificar
