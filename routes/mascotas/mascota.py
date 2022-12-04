@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, url_for, redirect
 from sqlalchemy import exc
 from models import Mascota
 from app import db,bcrypt
@@ -20,26 +20,13 @@ def func_add_mascota_view():
 #registra una mascota
 @appmascota.route('/mascota/registro', methods =['POST'])
 def registro():
-    print("dentro de registro")
-    #mascota  = request.get_json()
     token = request.form['token']
     nombreMascota = request.form['nombre']
     tipoMascota = request.form['tipo']
     razaMascota = request.form['raza']
-    #mascotaExists = Mascota.query.filter_by(id=mascota['id']).first()
     usuario = obtenerInfo(token)
     info_user = usuario['data']
-    print("imprimiendo info user en /mascota/registro")
-    #print(info_user)
-    print(nombreMascota)
-    #mascotaExists = info_user
-    print("imprimiendo mascotaExists")
-    print(info_user)
-
-    #maxIdMascota = Mascota.query.all().first().orderby
     maxIdMascotadb = db.engine.execute('select max(id) from public."Mascotas";').first()
-    print(maxIdMascotadb[0])
-    print(type(maxIdMascotadb[0]))
     nuevoId = maxIdMascotadb[0] + 1
     if info_user:
         mascota = Mascota(id=nuevoId,nombre=nombreMascota,user_id=info_user["user_id"],raza=razaMascota,tipo=tipoMascota)
@@ -51,26 +38,7 @@ def registro():
             mensaje = "Error"
     else:
         mensaje="datos erroneos"     
-    return jsonify({"message":mensaje})
-
-# #registra una mascota
-# @appmascota.route('/mascota/registro', methods =['POST'])
-# #@login_required
-# def registro():
-#     mascota  = request.get_json()
-#     mascotaExists = Mascota.query.filter_by(id=mascota['id']).first()
-    
-#     if not mascotaExists:
-#         mascota = Mascota(id=mascota["id"],nombre=mascota["nombre"],user_id=mascota["user_id"],raza=mascota["raza"],tipo=mascota["tipo"])
-#         try:
-#             db.session.add(mascota)
-#             db.session.commit()
-#             mensaje="Mascota creada"
-#         except exc.SQLAlchemyError as e:
-#             mensaje = "Error"
-#     else:
-#         mensaje="Mascota existente"     
-#     return jsonify({"message":mensaje})
+    return redirect(url_for('appsuer.func_user_view', auth_token=token))
 
 #Imprime todas las mascotas al recibir un token de usuario admin
 @appmascota.route('/mascotas') #get

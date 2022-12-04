@@ -68,7 +68,6 @@ def func_user_view():
 #Muestra todos los usuarios si recibe un token de usuario admin
 @appuser.route('/usuarios') #get
 def obtenerUsuarios():
-    # if key doesn't exist, returns None
     token = request.args.get('token')
     usuario = obtenerInfo(token)
     info_user = usuario['data']
