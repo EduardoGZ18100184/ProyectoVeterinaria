@@ -6,12 +6,12 @@ from auth import tokenCheck, obtenerInfo
 
 appuser = Blueprint('appsuer',__name__,template_folder="templates")
 
-#vista de registrar usuarios
+#vista de registrar usuarios                            #COMPLETADO
 @appuser.route('/auth/registro')
 def registro_view():
     return render_template('registro.html')
 
-#registra un nuevo usuario normal
+#registra un nuevo usuario normal                       #COMPLETADO
 @appuser.route('/auth/registro', methods =['POST'])
 def registro():
     nombreUser = request.form['email']
@@ -30,12 +30,12 @@ def registro():
     #return jsonify({"message":mensaje})
     return render_template('msjLogin.html',mensaje = mensaje)
 
-#vista de login
+#vista de login                                         #COMPLETADO
 @appuser.route('/auth/login')
 def login_view():
     return render_template('login.html')
 
-#muestra el listado correspondiente para el usuario
+#muestra el listado correspondiente para el usuario     #COMPLETADO
 # si es admin, el listado completo
 # si es normal solo el de sus mascotas
 @appuser.route('/auth/login' , methods =['POST'])
@@ -50,22 +50,29 @@ def login():
             print(auth_token)
             if searchUser.admin:
                 print("El usuario es admin")
-                return render_template('funcionesAdmin.html',auth_token = auth_token)
+                #return render_template('funcionesAdmin.html',auth_token = auth_token)
+                return redirect(url_for('appsuer.func_admin_view', auth_token=auth_token))
             else:
                 print("El usuario NO es admin")
                 #return render_template('funcionesUsuario.html',auth_token = auth_token)
                 return redirect(url_for('appsuer.func_user_view', auth_token=auth_token))
     return render_template('401.html')
 
-#vista de las funciones del usuario
+#vista de las funciones del usuario                     #COMPLETADO
 @appuser.route('/funcionesUsuario')
 def func_user_view():
-    token = request.args['auth_token']  # counterpart for url_for()
-    print("recibiendo token para mandorlo al html")
-    print(token)
+    token = request.args['auth_token'] 
     return render_template('funcionesUsuario.html',token = token)
 
-#Muestra todos los usuarios si recibe un token de usuario admin
+#vista de las funciones del admin                       #COMPLETADO
+@appuser.route('/funcionesAdmin')
+def func_admin_view():
+    token = request.args['auth_token']
+    print("recibiendo token para mandorlo al html")
+    print(token)
+    return render_template('funcionesAdmin.html',token = token)
+
+#Muestra todos los usuarios si recibe un token de usuario admin     #COMPLETADO
 @appuser.route('/usuarios') #get
 def obtenerUsuarios():
     token = request.args.get('token')
@@ -82,5 +89,4 @@ def obtenerUsuarios():
             usuarioData['registered_on'] = usuario.registered_on
             usuarioData['admin'] = usuario.admin
             output.append(usuarioData)
-    print("imprimiendo info del usuario desde /usuarios")
     return jsonify({'usuarios':output})

@@ -8,7 +8,7 @@ from flask_login import login_required
 
 appmascota = Blueprint('appmascota',__name__,template_folder="templates")
 
-#vista para registrar una mascota
+#vista para registrar una mascota   #COMPLETADO
 @appmascota.route('/mascota/registrar')
 def func_add_mascota_view():
     token = request.args.get('token')
@@ -17,7 +17,7 @@ def func_add_mascota_view():
     print(token)
     return render_template('agregarMascotas.html', token = token) #render_template('appmascota.registro',token = token)
 
-#registra una mascota
+#registra una mascota               #COMPLETADO
 @appmascota.route('/mascota/registro', methods =['POST'])
 def registro():
     token = request.form['token']
@@ -40,11 +40,13 @@ def registro():
         mensaje="datos erroneos"     
     return redirect(url_for('appsuer.func_user_view', auth_token=token))
 
-#Imprime todas las mascotas al recibir un token de usuario admin
+#Imprime todas las mascotas al recibir un token de usuario admin    #COMPLETADO
 @appmascota.route('/mascotas') #get
 def getAllPets():
     token = request.args.get('token')
+    print(token)
     usuario = obtenerInfo(token)
+    print(usuario)
     info_user = usuario['data']
     if info_user['admin']:
         output = []
@@ -62,7 +64,7 @@ def getAllPets():
     print("imprimiendo info del usuario desde /usuarios")
     return jsonify({'mascotas':output})
 
-#Imprime las mascotas por usuario
+#Imprime las mascotas por usuario       #COMPLETADO
 @appmascota.route('/mascotas-user') #get
 def getMascotasUser():
     token = request.args.get('token')
@@ -86,22 +88,3 @@ def getMascotasUser():
         output.append('El usuario no es administrador')
     print("imprimiendo info del usuario desde /usuarios")
     return jsonify({'mascotas':output})
-
-#registra una mascota
-# @appmascota.route('/mascota/registro', methods =['POST'])
-# def registro():
-#     nombreUser = request.form['email']
-#     userPass = request.form['password'] 
-#     searchUser = User.query.filter_by(email = nombreUser).first()
-#     if searchUser:
-#         mensaje="Usuario existente"
-#     else:
-#         usuario = User(email=nombreUser,password=userPass)
-#         try:
-#             db.session.add(usuario)
-#             db.session.commit()
-#             mensaje="Usuario creado"
-#         except exc.SQLAlchemyError as e:
-#             mensaje = "Error" 
-#     #return jsonify({"message":mensaje})
-#     return render_template('msjLogin.html',mensaje = mensaje)
