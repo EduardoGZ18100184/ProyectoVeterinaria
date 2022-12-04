@@ -1,4 +1,4 @@
-from flask import Blueprint, request,jsonify, render_template
+from flask import Blueprint, request,jsonify, render_template, url_for, redirect
 from sqlalchemy import exc
 from models import User
 from app import db,bcrypt
@@ -53,8 +53,17 @@ def login():
                 return render_template('funcionesAdmin.html',auth_token = auth_token)
             else:
                 print("El usuario NO es admin")
-                return render_template('funcionesUsuario.html',auth_token = auth_token)
+                #return render_template('funcionesUsuario.html',auth_token = auth_token)
+                return redirect(url_for('appsuer.func_user_view', auth_token=auth_token))
     return render_template('401.html')
+
+#vista de las funciones del usuario
+@appuser.route('/funcionesUsuario')
+def func_user_view():
+    token = request.args['auth_token']  # counterpart for url_for()
+    print("recibiendo token para mandorlo al html")
+    print(token)
+    return render_template('funcionesUsuario.html',token = token)
 
 #Muestra todos los usuarios si recibe un token de usuario admin
 @appuser.route('/usuarios') #get

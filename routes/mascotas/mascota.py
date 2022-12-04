@@ -1,4 +1,4 @@
-from flask import Blueprint, request,jsonify
+from flask import Blueprint, request, jsonify, render_template
 from sqlalchemy import exc
 from models import Mascota
 from app import db,bcrypt
@@ -8,9 +8,18 @@ from flask_login import login_required
 
 appmascota = Blueprint('appmascota',__name__,template_folder="templates")
 
+#vista para registrar una mascota
+@appmascota.route('/mascota/registrar')
+def func_add_mascota_view():
+    token = request.args.get('token')
+    #token = request.args['auth_token']  # counterpart for url_for()
+    print("recibiendo token para verificar que el usuario no es admin y obtener el id")
+    print(token)
+    return render_template('agregarMascotas.html', token = token) #render_template('appmascota.registro',token = token)
+
 #Imprime todas las mascotas si el token que recibe es de un usuario admin
 @appmascota.route('/mascota/registro', methods =['POST'])
-@login_required
+#@login_required
 def registro():
     mascota  = request.get_json()
     mascotaExists = Mascota.query.filter_by(id=mascota['id']).first()
