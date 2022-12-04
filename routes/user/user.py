@@ -2,7 +2,7 @@ from flask import Blueprint, request,jsonify, render_template
 from sqlalchemy import exc
 from models import User
 from app import db,bcrypt
-from auth import tokenCheck
+from auth import tokenCheck, obtenerInfo
 
 appuser = Blueprint('appsuer',__name__,template_folder="templates")
 
@@ -44,21 +44,71 @@ def login():
     if searchUser:
         validation = bcrypt.check_password_hash(searchUser.password,userPass)
         if validation:
+            auth_token = searchUser.encode_auth_token(user_id=searchUser.id)
+            print(auth_token)
             if searchUser.admin:
                 print("El usuario es admin")
-                return render_template('listadoCompletoMascotas.html')
+                return render_template('funcionesAdmin.html',auth_token = auth_token)
             else:
                 print("El usuario NO es admin")
-                return render_template('listadoMascotas.html')
+                return render_template('funcionesUsuario.html',auth_token = auth_token)
     return render_template('401.html')
 
 #Muestra todos los usuarios si recibe un token de usuario admin
-@appuser.route('/usuarios', methods=['GET'])
-@tokenCheck
-def getUsers(usuario):
-    print(usuario)
-    print(usuario['admin'])
-    if usuario['admin']:
+# @appuser.route('/usuarios', methods=['GET'])
+# @tokenCheck
+# def getUsers(usuario):
+#     print(usuario)
+#     print(usuario['admin'])
+#     if usuario['admin']:
+#         output = []
+#         usuarios = User.query.all()
+#         for usuario in usuarios:
+#             usuarioData = {}
+#             usuarioData['id'] = usuario.id
+#             usuarioData['email'] = usuario.email
+#             usuarioData['password'] = usuario.password
+#             usuarioData['registered_on'] = usuario.registered_on
+#             usuarioData['admin'] = usuario.admin
+#             output.append(usuarioData)
+#         return jsonify({'usuarios':output})
+
+# #Prueba de recibir un token e imprimir todos los usuarios
+# @appuser.route('/pba-users', methods=['POST'])
+# #@tokenCheck
+# #@obtenerInfo
+# def obtenerUsuarios():
+#     token = request.form['token']
+#     #print(token)
+#     #tokenUser = User()
+#     #print(usuario['admin'])
+#     #tokenUser = obtenerInfo(token)
+#     print("imprimiendo info del usuario desde /pba-users")
+#     print(token)
+#     usuario = obtenerInfo(token)
+#     print(usuario)
+#     ifo_user = usuario['data']
+#     if ifo_user['admin']:
+#         output = []
+#         usuarios = User.query.all()
+#         for usuario in usuarios:
+#             usuarioData = {}
+#             usuarioData['id'] = usuario.id
+#             usuarioData['email'] = usuario.email
+#             usuarioData['password'] = usuario.password
+#             usuarioData['registered_on'] = usuario.registered_on
+#             usuarioData['admin'] = usuario.admin
+#             output.append(usuarioData)
+#     return jsonify({'usuarios':output})
+
+#Muestra todos los usuarios si recibe un token de usuario admin
+@appuser.route('/usuarios')
+def obtenerUsuarios():
+    # if key doesn't exist, returns None
+    token = request.args.get('token')
+    usuario = obtenerInfo(token)
+    info_user = usuario['data']
+    if info_user['admin']:
         output = []
         usuarios = User.query.all()
         for usuario in usuarios:
@@ -69,4 +119,5 @@ def getUsers(usuario):
             usuarioData['registered_on'] = usuario.registered_on
             usuarioData['admin'] = usuario.admin
             output.append(usuarioData)
-        return jsonify({'usuarios':output})
+    print("imprimiendo info del usuario desde /usuarios")
+    return jsonify({'usuarios':output})
