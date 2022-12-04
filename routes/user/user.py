@@ -33,21 +33,10 @@ def login_view():
 @appuser.route('/auth/login' , methods =['POST'])
 def login():
     nombreUser = request.form['email'] #add 02-12-22
-    # print('RECIBO NOMBRE DE USUARIO:')
-    # print(nombreUser)
     userPass = request.form['password'] #add 02-12-22
-    # print('RECIBO PASS:')
-    # print(userPass)
-
-    #user  = request.get_json()
-    #usuario = User(email=user["email"],password=user["password"])
-    usuario = User(email=nombreUser,password=userPass) #add 02-12-22
-    print(usuario)
-    searchUser = User.query.filter_by(email = usuario.email).first()
-    print('IMPRIMIENDO EL searchUser:')
-    print(searchUser.id)
-    print(searchUser.admin)
-    print (type(searchUser))
+    #usuario = User(email=nombreUser,password=userPass) #add 02-12-22
+    #print(usuario)
+    searchUser = User.query.filter_by(email = nombreUser).first()
 
     if searchUser:
         validation = bcrypt.check_password_hash(searchUser.password,userPass)
@@ -55,7 +44,7 @@ def login():
             # print('IMPRIMIENDO EL validation:')
             # print(validation)
             #print (type(validation))
-            auth_token = usuario.encode_auth_token(user_id=searchUser.id)
+            #auth_token = usuario.encode_auth_token(user_id=searchUser.id)
 
             if searchUser.admin:
                 print("El usuario es admin")
@@ -70,9 +59,10 @@ def login():
             #         'auth_token': auth_token
             #     }
             #return jsonify(responseObject)
-            print(auth_token)
+            #print(auth_token)
             #return render_template('listadoMascotas.html')
-    return jsonify({"message":"Datos incorrectos"})
+    #return jsonify({"message":"Datos incorrectos"})
+    return render_template('401.html')
 
 @appuser.route('/esAdmin', methods=['GET'])
 @tokenCheck
