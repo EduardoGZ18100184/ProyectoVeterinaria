@@ -69,14 +69,37 @@ def getAllPets():
     print("imprimiendo info del usuario desde /usuarios")
     return jsonify({'mascotas':output})
 
-#Imprime las mascotas por usuario al recibir un token
-@appmascota.route('/mascotas-user', methods=['GET'])
-@tokenCheck
-def getMascotasUser(usuario):
-    output = []
-    id_usuario = usuario['user_id']
-    mascotas = Mascota.query.filter_by(user_id=id_usuario)
+# #Imprime las mascotas por usuario al recibir un token
+# @appmascota.route('/mascotas-user', methods=['GET'])
+# @tokenCheck
+# def getMascotasUser(usuario):
+#     output = []
+#     id_usuario = usuario['user_id']
+#     mascotas = Mascota.query.filter_by(user_id=id_usuario)
+#     print(mascotas)
+#     if mascotas is not None:
+#         for mascota in mascotas:
+#             mascotaData = {}
+#             mascotaData['id'] = mascota.id
+#             mascotaData['nombre'] = mascota.nombre
+#             mascotaData['id_duenio'] = mascota.user_id
+#             mascotaData['raza'] = mascota.raza
+#             mascotaData['tipo'] = mascota.tipo
+#             output.append(mascotaData)
+#     else:
+#         output.append('El usuario no tiene mascotas')
+#     return jsonify({'mascotas':output})
+
+@appmascota.route('/mascotas-user') #get
+def getMascotasUser():
+    token = request.args.get('token')
+    usuario = obtenerInfo(token)
+    info_user = usuario['data']
+    print(info_user)
+    print(type(info_user))
+    mascotas = Mascota.query.filter_by(user_id=info_user['user_id'])
     print(mascotas)
+    output = []
     if mascotas is not None:
         for mascota in mascotas:
             mascotaData = {}
@@ -87,7 +110,8 @@ def getMascotasUser(usuario):
             mascotaData['tipo'] = mascota.tipo
             output.append(mascotaData)
     else:
-        output.append('El usuario no tiene mascotas')
+        output.append('El usuario no es administrador')
+    print("imprimiendo info del usuario desde /usuarios")
     return jsonify({'mascotas':output})
 
 #registra una mascota
