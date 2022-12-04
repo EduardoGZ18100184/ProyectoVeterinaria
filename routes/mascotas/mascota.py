@@ -28,7 +28,8 @@ def registro():
     return jsonify({"message":mensaje})
 
 #Imprime todas las mascotas al recibir un token de usuario admin
-@appmascota.route('/mascotas', methods=['GET'])
+#@appmascota.route('/mascotas/<token>', methods=['GET'])
+@appmascota.route('/mascotas', methods=['POST'])
 @tokenCheck
 def getAllPets(usuario):
     print(usuario)
