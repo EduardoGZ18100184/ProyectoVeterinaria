@@ -17,9 +17,15 @@
                 <div class="card-body p-5 text-center">
                   
                   <p> {{token}} </p>
-                  
+
                   <h3 class="mb-5">Ingrese los datos de su mascota</h3>
                   
+                  <form action="/mascota/registro" method="post"> 
+                    <div class="form-outline mb-4">
+                      <input type="tex" name="token" value = {{token}} id="typeEmailX-2" class="form-control form-control-lg" />
+                      <label class="form-label" for="typeEmailX-2">token</label>
+                    </div>
+
                   <form action="/mascota/registro" method="post"> 
                   <div class="form-outline mb-4">
                     <input type="tex" name="nombre" id="typeEmailX-2" class="form-control form-control-lg" />
