@@ -57,7 +57,7 @@ def login():
     return render_template('401.html')
 
 #Muestra todos los usuarios si recibe un token de usuario admin
-@appuser.route('/usuarios')
+@appuser.route('/usuarios') #get
 def obtenerUsuarios():
     # if key doesn't exist, returns None
     token = request.args.get('token')

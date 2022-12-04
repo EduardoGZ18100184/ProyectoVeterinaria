@@ -7,6 +7,7 @@ from config import BaseConfig
 
 from routes.user.user import appuser
 from routes.mascotas.mascota import appmascota
+from routes.citas.citas import appmascitas
 #from routes.images.images import imageUser
 app = Flask(__name__)
 app.register_blueprint(appuser)

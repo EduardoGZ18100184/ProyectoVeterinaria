@@ -67,3 +67,22 @@ def getMascotasUser(usuario):
     else:
         output.append('El usuario no tiene mascotas')
     return jsonify({'mascotas':output})
+
+#registra una mascota
+# @appmascota.route('/mascota/registro', methods =['POST'])
+# def registro():
+#     nombreUser = request.form['email']
+#     userPass = request.form['password'] 
+#     searchUser = User.query.filter_by(email = nombreUser).first()
+#     if searchUser:
+#         mensaje="Usuario existente"
+#     else:
+#         usuario = User(email=nombreUser,password=userPass)
+#         try:
+#             db.session.add(usuario)
+#             db.session.commit()
+#             mensaje="Usuario creado"
+#         except exc.SQLAlchemyError as e:
+#             mensaje = "Error" 
+#     #return jsonify({"message":mensaje})
+#     return render_template('msjLogin.html',mensaje = mensaje)

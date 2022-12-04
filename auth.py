@@ -26,8 +26,6 @@ def obtenerInfo(token):
 
 
 def tokenCheck(f):
-    print('imprimiendo f:')
-    print(f)
     @wraps(f)
     def verificar(*args, **kwargs):
         token = None
