@@ -14,19 +14,21 @@ def registro_view():
 #registra un nuevo usuario normal
 @appuser.route('/auth/registro', methods =['POST'])
 def registro():
-    user  = request.get_json()
-    userExists = User.query.filter_by(email=user['email']).first()
-    if not userExists:
-        usuario = User(email=user["email"],password=user["password"])
+    nombreUser = request.form['email']
+    userPass = request.form['password'] 
+    searchUser = User.query.filter_by(email = nombreUser).first()
+    if searchUser:
+        mensaje="Usuario existente"
+    else:
+        usuario = User(email=nombreUser,password=userPass)
         try:
             db.session.add(usuario)
             db.session.commit()
             mensaje="Usuario creado"
         except exc.SQLAlchemyError as e:
-            mensaje = "Error"
-    else:
-        mensaje="Usuario existente"     
-    return jsonify({"message":mensaje})
+            mensaje = "Error" 
+    #return jsonify({"message":mensaje})
+    return render_template('msjLogin.html',mensaje = mensaje)
 
 #vista de login
 @appuser.route('/auth/login')
@@ -53,53 +55,6 @@ def login():
                 print("El usuario NO es admin")
                 return render_template('funcionesUsuario.html',auth_token = auth_token)
     return render_template('401.html')
-
-#Muestra todos los usuarios si recibe un token de usuario admin
-# @appuser.route('/usuarios', methods=['GET'])
-# @tokenCheck
-# def getUsers(usuario):
-#     print(usuario)
-#     print(usuario['admin'])
-#     if usuario['admin']:
-#         output = []
-#         usuarios = User.query.all()
-#         for usuario in usuarios:
-#             usuarioData = {}
-#             usuarioData['id'] = usuario.id
-#             usuarioData['email'] = usuario.email
-#             usuarioData['password'] = usuario.password
-#             usuarioData['registered_on'] = usuario.registered_on
-#             usuarioData['admin'] = usuario.admin
-#             output.append(usuarioData)
-#         return jsonify({'usuarios':output})
-
-# #Prueba de recibir un token e imprimir todos los usuarios
-# @appuser.route('/pba-users', methods=['POST'])
-# #@tokenCheck
-# #@obtenerInfo
-# def obtenerUsuarios():
-#     token = request.form['token']
-#     #print(token)
-#     #tokenUser = User()
-#     #print(usuario['admin'])
-#     #tokenUser = obtenerInfo(token)
-#     print("imprimiendo info del usuario desde /pba-users")
-#     print(token)
-#     usuario = obtenerInfo(token)
-#     print(usuario)
-#     ifo_user = usuario['data']
-#     if ifo_user['admin']:
-#         output = []
-#         usuarios = User.query.all()
-#         for usuario in usuarios:
-#             usuarioData = {}
-#             usuarioData['id'] = usuario.id
-#             usuarioData['email'] = usuario.email
-#             usuarioData['password'] = usuario.password
-#             usuarioData['registered_on'] = usuario.registered_on
-#             usuarioData['admin'] = usuario.admin
-#             output.append(usuarioData)
-#     return jsonify({'usuarios':output})
 
 #Muestra todos los usuarios si recibe un token de usuario admin
 @appuser.route('/usuarios')

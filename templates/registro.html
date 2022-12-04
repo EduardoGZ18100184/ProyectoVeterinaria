@@ -17,19 +17,21 @@
                 <div class="card-body p-5 text-center">
       
                   <h3 class="mb-5">Crear cuenta</h3>
-      
+                  
+                  <form action="/auth/registro" method="post">
                   <div class="form-outline mb-4">
-                    <input type="email" id="typeEmailX-2" class="form-control form-control-lg" />
+                    <input type="email" name="email" id="typeEmailX-2" class="form-control form-control-lg" />
                     <label class="form-label" for="typeEmailX-2">Correo</label>
                   </div>
       
                   <div class="form-outline mb-4">
-                    <input type="password" id="typePasswordX-2" class="form-control form-control-lg" />
+                    <input type="password" name="password"  id="typePasswordX-2" class="form-control form-control-lg" />
                     <label class="form-label" for="typePasswordX-2">Contraseña</label>
                   </div>
       
                   <button class="btn btn-primary btn-lg btn-block" type="submit">Continuar</button>
-      
+                  
+                  </form>
                   <hr class="my-4">
       
                   
