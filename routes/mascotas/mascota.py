@@ -3,8 +3,8 @@ from sqlalchemy import exc
 from models import Mascota
 from app import db,bcrypt
 from auth import tokenCheck
-from models import User #add 01-12-22
-from flask_login import login_required #add 02-12-22
+from models import User
+from flask_login import login_required
 
 appmascota = Blueprint('appmascota',__name__,template_folder="templates")
 
@@ -27,7 +27,7 @@ def registro():
         mensaje="Mascota existente"     
     return jsonify({"message":mensaje})
 
-#Imprime las mascotas por usuario al recibir un token
+#Imprime todas las mascotas al recibir un token de usuario admin
 @appmascota.route('/mascotas', methods=['GET'])
 @tokenCheck
 def getAllPets(usuario):
@@ -46,24 +46,14 @@ def getAllPets(usuario):
             output.append(mascotaData)
         return jsonify({'mascotas':output})
 
-
+#Imprime las mascotas por usuario al recibir un token
 @appmascota.route('/mascotas-user', methods=['GET'])
 @tokenCheck
 def getMascotasUser(usuario):
-    print(usuario)
-    print(usuario['admin'])
     output = []
-    #mascotas = Mascota.query.all()
-    #userExists = User.query.filter_by(id=usuario['id']).first()
-    #id_usuario = usuario['registered_on']
     id_usuario = usuario['user_id']
-    print('ID DEL USUARIO:')
-    #print(str(usuario['email']))
-    print(id_usuario)
-    mascotas = Mascota.query.filter_by(user_id=id_usuario)#.first()
+    mascotas = Mascota.query.filter_by(user_id=id_usuario)
     print(mascotas)
-
-    #print(dir(mascotas))
     if mascotas is not None:
         for mascota in mascotas:
             mascotaData = {}

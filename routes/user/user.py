@@ -6,10 +6,12 @@ from auth import tokenCheck
 
 appuser = Blueprint('appsuer',__name__,template_folder="templates")
 
+#vista de registrar usuarios
 @appuser.route('/auth/registro')
 def registro_view():
     return render_template('registro.html')
 
+#registra un nuevo usuario normal
 @appuser.route('/auth/registro', methods =['POST'])
 def registro():
     user  = request.get_json()
@@ -26,51 +28,31 @@ def registro():
         mensaje="Usuario existente"     
     return jsonify({"message":mensaje})
 
+#vista de login
 @appuser.route('/auth/login')
 def login_view():
     return render_template('login.html')
 
+#muestra el listado correspondiente para el usuario
+# si es admin, el listado completo
+# si es normal solo el de sus mascotas
 @appuser.route('/auth/login' , methods =['POST'])
 def login():
-    nombreUser = request.form['email'] #add 02-12-22
-    userPass = request.form['password'] #add 02-12-22
-    #usuario = User(email=nombreUser,password=userPass) #add 02-12-22
-    #print(usuario)
+    nombreUser = request.form['email']
+    userPass = request.form['password'] 
     searchUser = User.query.filter_by(email = nombreUser).first()
-
     if searchUser:
         validation = bcrypt.check_password_hash(searchUser.password,userPass)
         if validation:
-            # print('IMPRIMIENDO EL validation:')
-            # print(validation)
-            #print (type(validation))
-            #auth_token = usuario.encode_auth_token(user_id=searchUser.id)
-
             if searchUser.admin:
                 print("El usuario es admin")
                 return render_template('listadoCompletoMascotas.html')
             else:
                 print("El usuario NO es admin")
                 return render_template('listadoMascotas.html')
-
-            # responseObject = {
-            #         'status': 'success',
-            #         'message': 'Loggin exitoso',
-            #         'auth_token': auth_token
-            #     }
-            #return jsonify(responseObject)
-            #print(auth_token)
-            #return render_template('listadoMascotas.html')
-    #return jsonify({"message":"Datos incorrectos"})
     return render_template('401.html')
 
-@appuser.route('/esAdmin', methods=['GET'])
-@tokenCheck
-def esAdmin(usuario):
-    print(usuario)
-    print(usuario['admin'])
-    return usuario['admin']
-
+#Muestra todos los usuarios si recibe un token de usuario admin
 @appuser.route('/usuarios', methods=['GET'])
 @tokenCheck
 def getUsers(usuario):
