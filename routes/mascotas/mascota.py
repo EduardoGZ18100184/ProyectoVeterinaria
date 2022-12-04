@@ -2,7 +2,7 @@ from flask import Blueprint, request,jsonify
 from sqlalchemy import exc
 from models import Mascota
 from app import db,bcrypt
-from auth import tokenCheck
+from auth import tokenCheck, obtenerInfo
 from models import User
 from flask_login import login_required
 
@@ -29,12 +29,31 @@ def registro():
 
 #Imprime todas las mascotas al recibir un token de usuario admin
 #@appmascota.route('/mascotas/<token>', methods=['GET'])
-@appmascota.route('/mascotas', methods=['POST'])
-@tokenCheck
-def getAllPets(usuario):
-    print(usuario)
-    print(usuario['admin'])
-    if usuario['admin']:
+# @appmascota.route('/mascotas', methods=['POST'])
+# @tokenCheck
+# def getAllPets(usuario):
+#     print(usuario)
+#     print(usuario['admin'])
+#     if usuario['admin']:
+#         output = []
+#         mascotas = Mascota.query.all()
+#         for mascota in mascotas:
+#             mascotaData = {}
+#             mascotaData['id'] = mascota.id
+#             mascotaData['nombre'] = mascota.nombre
+#             mascotaData['id_duenio'] = mascota.user_id
+#             mascotaData['raza'] = mascota.raza
+#             mascotaData['tipo'] = mascota.tipo
+#             output.append(mascotaData)
+#         return jsonify({'mascotas':output})
+
+#Imprime todas las mascotas al recibir un token de usuario admin
+@appmascota.route('/mascotas') #get
+def getAllPets():
+    token = request.args.get('token')
+    usuario = obtenerInfo(token)
+    info_user = usuario['data']
+    if info_user['admin']:
         output = []
         mascotas = Mascota.query.all()
         for mascota in mascotas:
@@ -45,7 +64,10 @@ def getAllPets(usuario):
             mascotaData['raza'] = mascota.raza
             mascotaData['tipo'] = mascota.tipo
             output.append(mascotaData)
-        return jsonify({'mascotas':output})
+    else:
+        output.append('El usuario no es administrador')
+    print("imprimiendo info del usuario desde /usuarios")
+    return jsonify({'mascotas':output})
 
 #Imprime las mascotas por usuario al recibir un token
 @appmascota.route('/mascotas-user', methods=['GET'])
