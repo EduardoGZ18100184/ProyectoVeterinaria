@@ -68,7 +68,18 @@ def getAllPets():
     else:
         output.append('El usuario no es administrador')
     print("imprimiendo info del usuario desde /usuarios")
-    return jsonify({'mascotas':output})
+    #return jsonify({'mascotas':output}) #comentado 05-12-22
+    return render_template('printAllPets.html', mascotas = output)
+
+# #vista para mostrar todas las mascotas   #EN DESARROLLO
+# @appmascota.route('/mascotas')
+# def printAllPets():
+#     pets  = request.get_json()
+#     #token = request.args.get('token')
+#     #token = request.args['auth_token']  # counterpart for url_for()
+#     print("recibiendo el archivo json para imprimirlo")
+#     print(pets)
+#     return render_template('agregarMascotas.html', token = token) #render_template('appmascota.registro',token = token)
 
 #Imprime las mascotas por usuario       #COMPLETADO
 @appmascota.route('/mascotas-user') #get

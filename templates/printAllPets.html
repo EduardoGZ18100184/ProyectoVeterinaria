@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascotas</title>
+</head>
+<body>
+    <h1> Mostrando todas las Mascotas registradas en la aplicacion</h1>
+    {{mascotas}}
+
+    {% if mascotas %}
+        <p> Mostrando mascotas..</p>
+
+        <!-- intento de tabla-->
+        <TABLE BORDER>
+            <TR>
+                <TH>Nombre</TH> <TH>Raza</TH> <TH>Tipo</TH>
+            </TR>
+            {% for mascota in mascotas %}
+                <TR>
+                    <TD>{{ mascota['nombre'] }}</TD> <TD>{{ mascota['raza'] }}</TD> <TD>{{ mascota['tipo'] }} </TD>
+                </TR>
+            {% endfor %}
+        </TABLE>
+        <!-- intento de tabla-->
+
+        <tr>
+            <th><strong>Nombre</strong></th>
+            <th><strong>Raza</strong></th>
+            <th><strong>Tipo</strong></th>
+        </tr>
+
+        {% for mascota in mascotas %}
+        <!-- Recorrer Campos de Tabla-->
+        <!-- concepto_opera = (concepto, opera)-->
+        <!-- Aplica la presentación que necesites: tr, td,...-->
+        <!--<li> {{ mascota }} </li> -->
+
+        <tr>
+            <!--
+            <td> {{ mascota['nombre'] }}    </td>
+            <td> {{ mascota['raza'] }}      </td>
+            <td> {{ mascota['tipo'] }}    </td>
+            <li></li>
+            -->
+
+            <td> {{ mascota['nombre'] }} {{ mascota['raza'] }} {{ mascota['tipo'] }}</td>
+        </tr>
+        {% endfor %}
+
+    {% else %}
+        <p> no hay mascotas registradas </p>
+    {% endif %}
+</body>
+</html>
