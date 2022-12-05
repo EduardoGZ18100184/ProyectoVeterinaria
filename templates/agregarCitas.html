@@ -7,6 +7,7 @@
     <title>Inicio de Sesión</title>
     <!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 <body>
     <section class="vh-100" style="background-color: #508bfc;">
@@ -17,6 +18,7 @@
                 <div class="card-body p-5 text-center">
                   
                   <!--<p> {{token}} </p>-->
+                  
 
                   <h3 class="mb-5">Ingrese los datos para su cita</h3>
                   
@@ -35,10 +37,12 @@
                     <input type="datetime" name="fecha" step="1" min="2023-01-01T00:00Z" max="2023-06-31T12:00Z" value="2023-01-01T12:00" id="typePasswordX-2" class="form-control form-control-lg" />
                     <label class="form-label" for="typePasswordX-2">Fecha</label>
                   </div>
-      
+                  
+                  <p> {{mensaje}} </p>
                   <button class="btn btn-primary btn-lg btn-block" type="submit">Registrar mascota</button>
                 </form>
-
+                
+                <a class="nav-link font-color-general mr-3 ml-3" href="http://127.0.0.1:5000/funcionesUsuario?auth_token={{token}}">Regresar</a>
                 </div>
               </div>
             </div>

@@ -30,6 +30,12 @@ def registro():
     info_user = usuario['data']
     idUsuario = info_user['user_id']
     IdMascotadb = db.engine.execute('select id from public."Mascotas" where user_id = ' + str(idUsuario) + ' and nombre = \'' + nombreMascota +'\';').first()
+    #Validando que no exista otra cita con esa misma fecha
+    searchDate = Cita.query.filter_by(fecha = fechaCita).first()
+    if searchDate:
+        mensaje="Horario no disponible"
+        return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+        #return (mensaje)
     
     if IdMascotadb is not None:
         mascotaId = IdMascotadb[0]
@@ -43,8 +49,9 @@ def registro():
             mensaje = "Error"
     else:
         mensaje="datos erroneos"  
-        return (mensaje)   
-    return (mensaje)   
+        #return (mensaje)   
+    return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+    #return (mensaje)   
     #return redirect(url_for('appsuer.func_user_view', auth_token=token))
 
 #Imprime todas las citas al recibir un token de usuario admin    #COMPLETADO
