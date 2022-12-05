@@ -9,7 +9,7 @@ from flask_login import login_required
 
 appcita = Blueprint('appcita',__name__,template_folder="templates")
 
-#vista para registrar una mascota   #EN PRUEBAS
+#vista para registrar una mascota   #COMPLETADO
 @appcita.route('/cita/registrar')
 def func_add_cita_view():
     token = request.args.get('token')
@@ -17,7 +17,7 @@ def func_add_cita_view():
     print(token)
     return render_template('agregarCitas.html', token = token) #render_template('appmascota.registro',token = token)
 
-#registra una mascota               #PENDIENTE
+#registra una mascota               #SIGUE EN DESARROLLO
 @appcita.route('/cita/registro', methods =['POST'])
 def registro():
     token = request.form['token']
@@ -29,18 +29,11 @@ def registro():
     usuario = obtenerInfo(token)
     info_user = usuario['data']
     idUsuario = info_user['user_id']
-
     IdMascotadb = db.engine.execute('select id from public."Mascotas" where user_id = ' + str(idUsuario) + ' and nombre = \'' + nombreMascota +'\';').first()
-    
-    #obtengo el id consecutivo
-    # maxIdMascotadb = db.engine.execute('select max(id) from public."Mascotas";').first()
-    # nuevoId = maxIdMascotadb[0] + 1
     
     if IdMascotadb is not None:
         mascotaId = IdMascotadb[0]
         print(mascotaId)
-        #mascota = Mascota(id=nuevoId,nombre=nombreMascota,user_id=info_user["user_id"],raza=razaMascota,tipo=tipoMascota)
-        #cita = Cita(id = 1, user_id = idUsuario, fecha = fechaCita, status = 'Agendada', mascota_id = mascotaId)
         cita = Cita(user_id = idUsuario, fecha = fechaCita, status = 'Agendada', mascota_id = mascotaId)
         try:
             db.session.add(cita)
