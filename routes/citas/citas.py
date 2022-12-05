@@ -79,7 +79,8 @@ def getAllDates():
     else:
         output.append('El usuario no es administrador')
     print("imprimiendo info del usuario desde /usuarios")
-    return jsonify({'citas':output})
+    #return jsonify({'citas':output})
+    return render_template('printAllDates.html', citas = output, token = token)
 
 #Imprime las citas por usuario       #COMPLETADO
 @appcita.route('/citas-user') #get
