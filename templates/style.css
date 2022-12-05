@@ -40,7 +40,6 @@ body {
 	background-color: rgb(244, 246, 251);
 }
 
-
 /* estilos específicos para pantallas menores a 992px (menor que lg de bootstrap) */
 @media only screen and (max-width : 992px) {
 
