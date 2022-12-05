@@ -65,7 +65,7 @@ def getAllPets():
             output.append(mascotaData)
     else:
         output.append('El usuario no es administrador')
-    print("imprimiendo info del usuario desde /usuarios")
+    #print("imprimiendo info del usuario desde /usuarios")
     return render_template('printAllPets.html', mascotas = output, token = token)
 
 #Imprime las mascotas por usuario       #COMPLETADO
@@ -90,4 +90,5 @@ def getCitasUser():
             output.append(mascotaData)
     else:
         output.append('El usuario no tiene mascotas')
-    return jsonify({'mascotas':output})
+    #return jsonify({'mascotas':output})
+    return render_template('printUserPets.html', mascotas = output, token = token)

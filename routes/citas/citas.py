@@ -104,4 +104,5 @@ def getMascotasUser():
             output.append(citaData)
     else:
         output.append('El usuario no tiene citas para ninguna de sus mascotas')
-    return jsonify({'citas':output})
+    #return jsonify({'citas':output})
+    return render_template('printUserDates.html', citas = output, token = token)

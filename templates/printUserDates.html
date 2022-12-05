@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas</title>
+</head>
+<body>
+    <h1> Mostrando las citas registradas para el usuario</h1>
+
+    {% if citas %}
+        <!-- Tabla con bordes-->
+        <TABLE BORDER>
+            <TR>
+                <TH>ID</TH> <TH>Fecha</TH> <TH>Status</TH> 
+            </TR>
+            {% for cita in citas %}
+                <TR>
+                    <TD>{{ cita['id'] }}</TD> <TD>{{ cita['fecha'] }}</TD> <TD>{{ cita['status'] }} </TD>
+                </TR>
+            {% endfor %}
+        </TABLE>
+        <!-- Fin de tabla con bordes-->
+    {% else %}
+        <p> no hay citas registradas </p>
+    {% endif %}
+
+
+    <a class="nav-link font-color-general mr-3 ml-3" href="http://127.0.0.1:5000/funcionesUsuario?auth_token={{token}}">Regresar</a>
+</body>
+</html>
