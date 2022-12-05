@@ -69,7 +69,7 @@ def getAllPets():
         output.append('El usuario no es administrador')
     print("imprimiendo info del usuario desde /usuarios")
     #return jsonify({'mascotas':output}) #comentado 05-12-22
-    return render_template('printAllPets.html', mascotas = output)
+    return render_template('printAllPets.html', mascotas = output, token = token)
 
 # #vista para mostrar todas las mascotas   #EN DESARROLLO
 # @appmascota.route('/mascotas')

@@ -8,12 +8,9 @@
 </head>
 <body>
     <h1> Mostrando todas las Mascotas registradas en la aplicacion</h1>
-    {{mascotas}}
 
     {% if mascotas %}
-        <p> Mostrando mascotas..</p>
-
-        <!-- intento de tabla-->
+        <!-- Tabla con bordes-->
         <TABLE BORDER>
             <TR>
                 <TH>Nombre</TH> <TH>Raza</TH> <TH>Tipo</TH>
@@ -24,34 +21,11 @@
                 </TR>
             {% endfor %}
         </TABLE>
-        <!-- intento de tabla-->
-
-        <tr>
-            <th><strong>Nombre</strong></th>
-            <th><strong>Raza</strong></th>
-            <th><strong>Tipo</strong></th>
-        </tr>
-
-        {% for mascota in mascotas %}
-        <!-- Recorrer Campos de Tabla-->
-        <!-- concepto_opera = (concepto, opera)-->
-        <!-- Aplica la presentación que necesites: tr, td,...-->
-        <!--<li> {{ mascota }} </li> -->
-
-        <tr>
-            <!--
-            <td> {{ mascota['nombre'] }}    </td>
-            <td> {{ mascota['raza'] }}      </td>
-            <td> {{ mascota['tipo'] }}    </td>
-            <li></li>
-            -->
-
-            <td> {{ mascota['nombre'] }} {{ mascota['raza'] }} {{ mascota['tipo'] }}</td>
-        </tr>
-        {% endfor %}
-
+        <!-- Fin de tabla con bordes-->
     {% else %}
         <p> no hay mascotas registradas </p>
     {% endif %}
+
+    <a class="nav-link font-color-general mr-3 ml-3" href="http://127.0.0.1:5000/funcionesAdmin?auth_token={{token}}">Regresar</a>
 </body>
 </html>
