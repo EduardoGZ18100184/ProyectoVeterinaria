@@ -12,10 +12,9 @@ appmascota = Blueprint('appmascota',__name__,template_folder="templates")
 @appmascota.route('/mascota/registrar')
 def func_add_mascota_view():
     token = request.args.get('token')
-    #token = request.args['auth_token']  # counterpart for url_for()
     print("recibiendo token para verificar que el usuario no es admin y obtener el id")
     print(token)
-    return render_template('agregarMascotas.html', token = token) #render_template('appmascota.registro',token = token)
+    return render_template('agregarMascotas.html', token = token) 
 
 #registra una mascota               #COMPLETADO
 @appmascota.route('/mascota/registro', methods =['POST'])
@@ -43,7 +42,6 @@ def registro():
             mensaje = "Error"
     else:
         mensaje="datos erroneos"     
-    #return redirect(url_for('appsuer.func_user_view', auth_token=token, ))
     return render_template('agregarMascotas.html', token = token, mensaje = mensaje)
 
 #Imprime todas las mascotas al recibir un token de usuario admin    #COMPLETADO
@@ -68,18 +66,7 @@ def getAllPets():
     else:
         output.append('El usuario no es administrador')
     print("imprimiendo info del usuario desde /usuarios")
-    #return jsonify({'mascotas':output}) #comentado 05-12-22
     return render_template('printAllPets.html', mascotas = output, token = token)
-
-# #vista para mostrar todas las mascotas   #EN DESARROLLO
-# @appmascota.route('/mascotas')
-# def printAllPets():
-#     pets  = request.get_json()
-#     #token = request.args.get('token')
-#     #token = request.args['auth_token']  # counterpart for url_for()
-#     print("recibiendo el archivo json para imprimirlo")
-#     print(pets)
-#     return render_template('agregarMascotas.html', token = token) #render_template('appmascota.registro',token = token)
 
 #Imprime las mascotas por usuario       #COMPLETADO
 @appmascota.route('/mascotas-user') #get
