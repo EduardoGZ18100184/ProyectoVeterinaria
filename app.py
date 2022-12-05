@@ -7,11 +7,12 @@ from config import BaseConfig
 
 from routes.user.user import appuser
 from routes.mascotas.mascota import appmascota
-from routes.citas.citas import appmascitas
+from routes.citas.citas import appcita 
 #from routes.images.images import imageUser
 app = Flask(__name__)
 app.register_blueprint(appuser)
 app.register_blueprint(appmascota) #agregando appmascota
+app.register_blueprint(appcita) #agregando appcita
 #app.register_blueprint(imageUser)
 app.config.from_object(BaseConfig)
 
@@ -40,4 +41,3 @@ def peticion_mala(error):
 
 app.register_error_handler(400,peticion_mala)
 
-#RUTAS PROTEGIDAS

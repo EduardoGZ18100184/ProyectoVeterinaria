@@ -86,5 +86,4 @@ def getMascotasUser():
             output.append(mascotaData)
     else:
         output.append('El usuario no es administrador')
-    print("imprimiendo info del usuario desde /usuarios")
     return jsonify({'mascotas':output})
