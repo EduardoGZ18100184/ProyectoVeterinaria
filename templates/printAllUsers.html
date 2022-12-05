@@ -4,27 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mascotas</title>
+    <title>Usuarios</title>
 </head>
 <body>
-    <h1> Mostrando todas las Mascotas registradas en la aplicación</h1>
+    <h1> Mostrando todos los usuarios registradas en la aplicación</h1>
 
-    {% if mascotas %}
+    {% if usuarios %}
         <!-- Tabla con bordes-->
         <TABLE BORDER>
             <TR>
-                <TH>Nombre</TH> <TH>Raza</TH> <TH>Tipo</TH>
+                <TH>ID</TH> <TH>Email</TH> <TH>Fecha Registro</TH>
             </TR>
-            {% for mascota in mascotas %}
+            {% for usuario in usuarios %}
                 <TR>
-                    <TD>{{ mascota['nombre'] }}</TD> <TD>{{ mascota['raza'] }}</TD> <TD>{{ mascota['tipo'] }} </TD>
+                    <TD>{{ usuario['id'] }}</TD> <TD>{{ usuario['email'] }}</TD> <TD>{{ usuario['registered_on'] }} </TD>
                 </TR>
             {% endfor %}
         </TABLE>
         <!-- Fin de tabla con bordes-->
     {% else %}
-        <p> no hay mascotas registradas </p>
+        <p> no hay usuarios registrados </p>
     {% endif %}
+
 
     <a class="nav-link font-color-general mr-3 ml-3" href="http://127.0.0.1:5000/funcionesAdmin?auth_token={{token}}">Regresar</a>
 </body>

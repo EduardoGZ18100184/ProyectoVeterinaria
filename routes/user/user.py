@@ -89,4 +89,5 @@ def obtenerUsuarios():
             usuarioData['registered_on'] = usuario.registered_on
             usuarioData['admin'] = usuario.admin
             output.append(usuarioData)
-    return jsonify({'usuarios':output})
+    #return jsonify({'usuarios':output})
+    return render_template('printAllUsers.html', usuarios = output, token = token)
