@@ -66,7 +66,7 @@ def getAllPets():
 
 #Imprime las mascotas por usuario       #COMPLETADO
 @appmascota.route('/mascotas-user') #get
-def getMascotasUser():
+def getCitasUser():
     token = request.args.get('token')
     usuario = obtenerInfo(token)
     info_user = usuario['data']
@@ -85,5 +85,5 @@ def getMascotasUser():
             mascotaData['tipo'] = mascota.tipo
             output.append(mascotaData)
     else:
-        output.append('El usuario no es administrador')
+        output.append('El usuario no tiene mascotas')
     return jsonify({'mascotas':output})

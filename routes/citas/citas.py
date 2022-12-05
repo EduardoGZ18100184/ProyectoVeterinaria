@@ -17,7 +17,7 @@ def func_add_cita_view():
     print(token)
     return render_template('agregarCitas.html', token = token) #render_template('appmascota.registro',token = token)
 
-#registra una mascota               #SIGUE EN DESARROLLO
+#registra una mascota               #SIGUE EN DESARROLLO (Pendiente validaciones)
 @appcita.route('/cita/registro', methods =['POST'])
 def registro():
     token = request.form['token']
@@ -46,3 +46,51 @@ def registro():
         return (mensaje)   
     return (mensaje)   
     #return redirect(url_for('appsuer.func_user_view', auth_token=token))
+
+#Imprime todas las citas al recibir un token de usuario admin    #COMPLETADO
+@appcita.route('/citas') #get
+def getAllDates():
+    token = request.args.get('token')
+    print(token)
+    usuario = obtenerInfo(token)
+    print(usuario)
+    info_user = usuario['data']
+    if info_user['admin']:
+        output = []
+        citas = Cita.query.all()
+        for cita in citas:
+            citaData = {}
+            citaData['id'] = cita.id
+            citaData['nombre'] = cita.mascota_id
+            citaData['id_duenio'] = cita.user_id
+            citaData['fecha'] = cita.fecha
+            citaData['status'] = cita.status
+            output.append(citaData)
+    else:
+        output.append('El usuario no es administrador')
+    print("imprimiendo info del usuario desde /usuarios")
+    return jsonify({'citas':output})
+
+#Imprime las citas por usuario       #COMPLETADO
+@appcita.route('/citas-user') #get
+def getMascotasUser():
+    token = request.args.get('token')
+    usuario = obtenerInfo(token)
+    info_user = usuario['data']
+    print(info_user)
+    print(type(info_user))
+    citas = Cita.query.filter_by(user_id=info_user['user_id'])
+    print(citas)
+    output = []
+    if citas is not None:
+        for cita in citas:
+            citaData = {}
+            citaData['id'] = cita.id
+            citaData['mascota_id'] = cita.mascota_id
+            citaData['id_duenio'] = cita.user_id
+            citaData['fecha'] = cita.fecha
+            citaData['status'] = cita.status
+            output.append(citaData)
+    else:
+        output.append('El usuario no tiene citas para ninguna de sus mascotas')
+    return jsonify({'citas':output})
