@@ -25,7 +25,10 @@ def registro():
     print(token)
     nombreMascota = request.form['nombre']
     fechaCita = request.form['fecha']
-
+    if nombreMascota == '':
+        mensaje = "Datos invalidos"
+        return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+    
     usuario = obtenerInfo(token)
     info_user = usuario['data']
     idUsuario = info_user['user_id']

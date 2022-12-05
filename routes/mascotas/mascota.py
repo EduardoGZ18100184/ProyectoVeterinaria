@@ -28,6 +28,11 @@ def registro():
     info_user = usuario['data']
     maxIdMascotadb = db.engine.execute('select max(id) from public."Mascotas";').first()
     nuevoId = maxIdMascotadb[0] + 1
+
+    if nombreMascota == '' or tipoMascota == '' or razaMascota == '':
+        mensaje="datos erroneos"
+        return render_template('agregarMascotas.html', token = token, mensaje = mensaje)
+
     if info_user:
         mascota = Mascota(id=nuevoId,nombre=nombreMascota,user_id=info_user["user_id"],raza=razaMascota,tipo=tipoMascota)
         try:
@@ -38,7 +43,8 @@ def registro():
             mensaje = "Error"
     else:
         mensaje="datos erroneos"     
-    return redirect(url_for('appsuer.func_user_view', auth_token=token))
+    #return redirect(url_for('appsuer.func_user_view', auth_token=token, ))
+    return render_template('agregarMascotas.html', token = token, mensaje = mensaje)
 
 #Imprime todas las mascotas al recibir un token de usuario admin    #COMPLETADO
 @appmascota.route('/mascotas') #get
