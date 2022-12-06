@@ -61,10 +61,10 @@ def getAllPets():
             mascotaData['id_duenio'] = mascota.user_id
             mascotaData['raza'] = mascota.raza
             mascotaData['tipo'] = mascota.tipo
-            mascotaData['Duenio'] = info_user['email']
+            #mascotaData['Duenio'] = info_user['email']
             #busca el nombre del user_id
-            #usuario = db.engine.execute('select email from public."users" where id = ' + str(mascota.user_id) + ';').first()
-            #mascotaData['Duenio'] = usuario[0]
+            usuario = db.engine.execute('select email from public."users" where id = ' + str(mascota.user_id) + ';').first()
+            mascotaData['Duenio'] = usuario[0]
             output.append(mascotaData)
     else:
         output.append('El usuario no es administrador')

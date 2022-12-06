@@ -96,7 +96,12 @@ def getAllDates():
             citaData['id'] = cita.id
             citaData['fecha'] = cita.fecha
             citaData['status'] = cita.status
-            citaData['duenio'] = info_user['email']
+            #citaData['duenio'] = info_user['email']
+            #busca el nombre del user_id
+            usuario = db.engine.execute('select email from public."users" where id = ' + str(cita.user_id) + ';').first()
+            print('select email from public."users" where id = ' + str(cita.user_id) + ';')
+            citaData['duenio'] = usuario[0]
+            print(usuario[0])
 
             #obteniendo nombres de mascota
             #citaData['nombre_mascota'] = cita.mascota_id
@@ -124,7 +129,13 @@ def GenerarExcel():
             citaData['id_duenio'] = cita.user_id
             citaData['fecha'] = cita.fecha
             citaData['status'] = cita.status
-            citaData['duenio'] = info_user['email']
+            #citaData['duenio'] = info_user['email']
+            #busca el nombre del user_id
+            usuario = db.engine.execute('select email from public."users" where id = ' + str(cita.user_id) + ';').first()
+            print('select email from public."users" where id = ' + str(cita.user_id) + ';')
+            citaData['duenio'] = usuario[0]
+            print(usuario[0])
+
             #obteniendo nombres de mascota
             mascotaName = db.engine.execute('select nombre from public."Mascotas" where id = ' + str(cita.mascota_id) + ';').first()
             citaData['nombre_mascota'] = mascotaName[0]
