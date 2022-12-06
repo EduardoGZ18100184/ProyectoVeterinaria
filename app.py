@@ -1,4 +1,4 @@
-from flask import Flask,request,jsonify, render_template
+from flask import Flask,request,jsonify, render_template, session
 from flask_cors import CORS
 from database import db
 from encriptador import bcrypt
@@ -40,4 +40,3 @@ def peticion_mala(error):
     return render_template('400.html')
 
 app.register_error_handler(400,peticion_mala)
-
