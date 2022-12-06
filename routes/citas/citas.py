@@ -14,6 +14,8 @@ appcita = Blueprint('appcita',__name__,template_folder="templates")
 @appcita.route('/cita/registrar')
 def func_add_cita_view():
     token = request.args.get('token')
+    #ACTUALIZACION: Permite mostrar en el imput del nombre de las mascotas el listado de las mascotas
+    
     print("recibiendo token para verificar que el usuario no es admin y obtener el id")
     print(token)
     return render_template('agregarCitas.html', token = token) #render_template('appmascota.registro',token = token)
@@ -34,7 +36,7 @@ def registro():
     hora = request.form['time']
     listaHorarios = ['19:00','18:00','17:00','16:00','15:00','14:00','13:00','12:00','11:00','10:00','09:00']
     if hora not in listaHorarios:
-        mensaje = "Datos invalidos"
+        mensaje="Horario no disponible"
         return render_template('agregarCitas.html', token = token, mensaje = mensaje)
     
     fechaCita = fecha +' ' + hora
