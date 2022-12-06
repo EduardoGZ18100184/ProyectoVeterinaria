@@ -37,6 +37,16 @@
                     <input type="datetime" name="fecha" step="1" min="2023-01-01T00:00Z" max="2023-06-31T12:00Z" value="2023-01-01T12:00" id="typePasswordX-2" class="form-control form-control-lg" />
                     <label class="form-label" for="typePasswordX-2">Fecha</label>
                   </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="date" name="date" step="1" min="2017-04-01" max="2017-04-20" required/>
+                    <label class="form-label" for="typePasswordX-2">Elija el dia</label>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label for="appt-time">Elija una hora: </label>
+                    <input type="time" id="appt" name="appt" min="09:00" max="18:00" step="00:30" required>
+                  </div>
                   
                   <p> {{mensaje}} </p>
                   <button class="btn btn-primary btn-lg btn-block" type="submit">Registrar mascota</button>

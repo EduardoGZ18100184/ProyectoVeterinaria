@@ -25,15 +25,16 @@ def registro():
     razaMascota = request.form['raza']
     usuario = obtenerInfo(token)
     info_user = usuario['data']
-    maxIdMascotadb = db.engine.execute('select max(id) from public."Mascotas";').first()
-    nuevoId = maxIdMascotadb[0] + 1
+    #maxIdMascotadb = db.engine.execute('select max(id) from public."Mascotas";').first()
+    #nuevoId = maxIdMascotadb[0] + 1
 
     if nombreMascota == '' or tipoMascota == '' or razaMascota == '':
         mensaje="datos erroneos"
         return render_template('agregarMascotas.html', token = token, mensaje = mensaje)
 
     if info_user:
-        mascota = Mascota(id=nuevoId,nombre=nombreMascota,user_id=info_user["user_id"],raza=razaMascota,tipo=tipoMascota)
+        #mascota = Mascota(id=nuevoId,nombre=nombreMascota,user_id=info_user["user_id"],raza=razaMascota,tipo=tipoMascota)
+        mascota = Mascota(nombre=nombreMascota,user_id=info_user["user_id"],raza=razaMascota,tipo=tipoMascota)
         try:
             db.session.add(mascota)
             db.session.commit()
