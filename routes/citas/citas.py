@@ -18,14 +18,26 @@ def func_add_cita_view():
     print(token)
     return render_template('agregarCitas.html', token = token) #render_template('appmascota.registro',token = token)
 
+
+
+
+
 #registra una mascota               #SIGUE EN DESARROLLO (Pendiente validaciones)
 @appcita.route('/cita/registro', methods =['POST'])
 def registro():
     token = request.form['token']
-    print("recibiendo token para agendar la CITA")
-    print(token)
     nombreMascota = request.form['nombre']
-    fechaCita = request.form['fecha']
+    #fechaCita = request.form['fecha']
+
+    #ACTUALIZACION: Se recibe fecha y hora por separado para facil validacion
+    fecha = request.form['date']
+    hora = request.form['time']
+    listaHorarios = ['19:00','18:00','17:00','16:00','15:00','14:00','13:00','12:00','11:00','10:00','09:00']
+    if hora not in listaHorarios:
+        mensaje = "Datos invalidos"
+        return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+    
+    fechaCita = fecha +' ' + hora
     if nombreMascota == '':
         mensaje = "Datos invalidos"
         return render_template('agregarCitas.html', token = token, mensaje = mensaje)

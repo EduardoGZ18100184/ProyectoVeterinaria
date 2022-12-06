@@ -33,21 +33,39 @@
                     <label class="form-label" for="typeEmailX-2">Mascota</label>
                   </div>
                   
+                  <!--
                   <div class="form-outline mb-4">
                     <input type="datetime-local" name="fecha" step="1" min="2023-01-01T00:00Z" max="2023-06-31T12:00Z" value="2023-01-01T12:00" id="typePasswordX-2" class="form-control form-control-lg" />
                     <label class="form-label" for="typePasswordX-2">Fecha</label>
                   </div>
+                  -->
 
                   <div class="form-outline mb-4">
-                    <input type="date" name="date" step="1" min="2017-04-01" max="2017-04-20" required/>
+                    <input type="date" name="date" step="1" min="2023-01-01" max="2023-07-01" required/>
                     <label class="form-label" for="typePasswordX-2">Elija el dia</label>
                   </div>
 
+                  <!--<p> PRUEBA DE USO DE DATALIST </p>-->
                   <div class="form-outline mb-4">
                     <label for="appt-time">Elija una hora: </label>
-                    <input type="time" id="appt" name="appt" min="09:00" max="18:00" step="00:30" required>
+                    <input type="time" id="time" name="time" list="listalimitestiempo" step="3600"  required>
                   </div>
-                  
+
+                  <datalist id="listalimitestiempo">
+                    <option value="09:00">
+                    <option value="10:00">
+                    <option value="11:00">
+                    <option value="12:00">
+                    <option value="13:00">
+                    <option value="14:00">
+                    <option value="15:00">
+                    <option value="16:00">
+                    <option value="17:00">
+                    <option value="18:00">
+                    <option value="19:00">
+                  </datalist>
+                  <!--<p> PRUEBA DE USO DE DATALIST </p>-->
+
                   <p> {{mensaje}} </p>
                   <button class="btn btn-primary btn-lg btn-block" type="submit">Registrar mascota</button>
                 </form>
