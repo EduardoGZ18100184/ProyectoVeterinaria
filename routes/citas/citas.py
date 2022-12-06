@@ -6,6 +6,7 @@ from auth import tokenCheck, obtenerInfo
 from models import User
 from models import Cita
 from flask_login import login_required
+from json2excel import Json2Excel
 
 appcita = Blueprint('appcita',__name__,template_folder="templates")
 
@@ -61,9 +62,7 @@ def registro():
 @appcita.route('/citas') #get
 def getAllDates():
     token = request.args.get('token')
-    print(token)
     usuario = obtenerInfo(token)
-    print(usuario)
     info_user = usuario['data']
     if info_user['admin']:
         output = []
@@ -80,7 +79,35 @@ def getAllDates():
         output.append('El usuario no es administrador')
     print("imprimiendo info del usuario desde /usuarios")
     #return jsonify({'citas':output})
+    #json2excel = Json2Excel(head_name_cols=["id","nombre","id_duenio","fecha","status"])
+    #print(json2excel.run(output))
     return render_template('printAllDates.html', citas = output, token = token)
+
+#Genera excel de todas las citas al recibir un token de usuario admin    #COMPLETADO
+@appcita.route('/citas-excel') #get
+def GenerarExcel():
+    token = request.args.get('token')
+    print(token)
+    usuario = obtenerInfo(token)
+    print(usuario)
+    info_user = usuario['data']
+    if info_user['admin']:
+        output = []
+        citas = Cita.query.all()
+        for cita in citas:
+            citaData = {}
+            citaData['id'] = cita.id
+            citaData['nombre'] = cita.mascota_id
+            citaData['id_duenio'] = cita.user_id
+            citaData['fecha'] = cita.fecha
+            citaData['status'] = cita.status
+            output.append(citaData)
+        
+        json2excel = Json2Excel(head_name_cols=["id","nombre","id_duenio","fecha","status"])
+        ruta = json2excel.run(output)
+    else:
+        output.append('El usuario no es administrador')
+    return render_template('GeneracionExcel.html', ruta = ruta, token = token)
 
 #Imprime las citas por usuario       #COMPLETADO
 @appcita.route('/citas-user') #get
