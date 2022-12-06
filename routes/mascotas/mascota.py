@@ -48,9 +48,7 @@ def registro():
 @appmascota.route('/mascotas') #get
 def getAllPets():
     token = request.args.get('token')
-    print(token)
     usuario = obtenerInfo(token)
-    print(usuario)
     info_user = usuario['data']
     if info_user['admin']:
         output = []
@@ -62,10 +60,13 @@ def getAllPets():
             mascotaData['id_duenio'] = mascota.user_id
             mascotaData['raza'] = mascota.raza
             mascotaData['tipo'] = mascota.tipo
+            mascotaData['Duenio'] = info_user['email']
+            #busca el nombre del user_id
+            #usuario = db.engine.execute('select email from public."users" where id = ' + str(mascota.user_id) + ';').first()
+            #mascotaData['Duenio'] = usuario[0]
             output.append(mascotaData)
     else:
         output.append('El usuario no es administrador')
-    #print("imprimiendo info del usuario desde /usuarios")
     return render_template('printAllPets.html', mascotas = output, token = token)
 
 #Imprime las mascotas por usuario       #COMPLETADO
@@ -87,8 +88,8 @@ def getCitasUser():
             mascotaData['id_duenio'] = mascota.user_id
             mascotaData['raza'] = mascota.raza
             mascotaData['tipo'] = mascota.tipo
+            mascotaData['Duenio'] = info_user['email']
             output.append(mascotaData)
     else:
         output.append('El usuario no tiene mascotas')
-    #return jsonify({'mascotas':output})
     return render_template('printUserPets.html', mascotas = output, token = token)

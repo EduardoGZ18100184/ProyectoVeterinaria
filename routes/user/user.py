@@ -27,7 +27,6 @@ def registro():
             mensaje="Usuario creado"
         except exc.SQLAlchemyError as e:
             mensaje = "Error" 
-    #return jsonify({"message":mensaje})
     return render_template('msjLogin.html',mensaje = mensaje)
 
 #vista de login                                         #COMPLETADO
@@ -50,11 +49,9 @@ def login():
             print(auth_token)
             if searchUser.admin:
                 print("El usuario es admin")
-                #return render_template('funcionesAdmin.html',auth_token = auth_token)
                 return redirect(url_for('appsuer.func_admin_view', auth_token=auth_token))
             else:
                 print("El usuario NO es admin")
-                #return render_template('funcionesUsuario.html',auth_token = auth_token)
                 return redirect(url_for('appsuer.func_user_view', auth_token=auth_token))
     return render_template('401.html')
 
@@ -89,5 +86,4 @@ def obtenerUsuarios():
             usuarioData['registered_on'] = usuario.registered_on
             usuarioData['admin'] = usuario.admin
             output.append(usuarioData)
-    #return jsonify({'usuarios':output})
     return render_template('printAllUsers.html', usuarios = output, token = token)

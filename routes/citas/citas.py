@@ -39,7 +39,6 @@ def registro():
     if searchDate:
         mensaje="Horario no disponible"
         return render_template('agregarCitas.html', token = token, mensaje = mensaje)
-        #return (mensaje)
     
     if IdMascotadb is not None:
         mascotaId = IdMascotadb[0]
@@ -52,11 +51,8 @@ def registro():
         except exc.SQLAlchemyError as e:
             mensaje = "Error"
     else:
-        mensaje="datos erroneos"  
-        #return (mensaje)   
-    return render_template('agregarCitas.html', token = token, mensaje = mensaje)
-    #return (mensaje)   
-    #return redirect(url_for('appsuer.func_user_view', auth_token=token))
+        mensaje="datos erroneos"    
+    return render_template('agregarCitas.html', token = token, mensaje = mensaje) 
 
 #Imprime todas las citas al recibir un token de usuario admin    #COMPLETADO
 @appcita.route('/citas') #get
@@ -70,17 +66,17 @@ def getAllDates():
         for cita in citas:
             citaData = {}
             citaData['id'] = cita.id
-            citaData['nombre'] = cita.mascota_id
-            citaData['id_duenio'] = cita.user_id
             citaData['fecha'] = cita.fecha
             citaData['status'] = cita.status
+            citaData['duenio'] = info_user['email']
+
+            #obteniendo nombres de mascota
+            #citaData['nombre_mascota'] = cita.mascota_id
+            mascotaName = db.engine.execute('select nombre from public."Mascotas" where id = ' + str(cita.mascota_id) + ';').first()
+            citaData['nombre_mascota'] = mascotaName[0]
             output.append(citaData)
     else:
         output.append('El usuario no es administrador')
-    print("imprimiendo info del usuario desde /usuarios")
-    #return jsonify({'citas':output})
-    #json2excel = Json2Excel(head_name_cols=["id","nombre","id_duenio","fecha","status"])
-    #print(json2excel.run(output))
     return render_template('printAllDates.html', citas = output, token = token)
 
 #Genera excel de todas las citas al recibir un token de usuario admin    #COMPLETADO
@@ -97,13 +93,16 @@ def GenerarExcel():
         for cita in citas:
             citaData = {}
             citaData['id'] = cita.id
-            citaData['nombre'] = cita.mascota_id
             citaData['id_duenio'] = cita.user_id
             citaData['fecha'] = cita.fecha
             citaData['status'] = cita.status
+            citaData['duenio'] = info_user['email']
+            #obteniendo nombres de mascota
+            mascotaName = db.engine.execute('select nombre from public."Mascotas" where id = ' + str(cita.mascota_id) + ';').first()
+            citaData['nombre_mascota'] = mascotaName[0]
             output.append(citaData)
         
-        json2excel = Json2Excel(head_name_cols=["id","nombre","id_duenio","fecha","status"])
+        json2excel = Json2Excel(head_name_cols=["id","nombre_mascota","duenio","id_duenio","fecha","status"])
         ruta = json2excel.run(output)
     else:
         output.append('El usuario no es administrador')
@@ -124,12 +123,14 @@ def getMascotasUser():
         for cita in citas:
             citaData = {}
             citaData['id'] = cita.id
-            citaData['mascota_id'] = cita.mascota_id
             citaData['id_duenio'] = cita.user_id
             citaData['fecha'] = cita.fecha
             citaData['status'] = cita.status
+
+            #obteniendo nombres de mascota
+            mascotaName = db.engine.execute('select nombre from public."Mascotas" where id = ' + str(cita.mascota_id) + ';').first()
+            citaData['nombre_mascota'] = mascotaName[0]
             output.append(citaData)
     else:
         output.append('El usuario no tiene citas para ninguna de sus mascotas')
-    #return jsonify({'citas':output})
     return render_template('printUserDates.html', citas = output, token = token)

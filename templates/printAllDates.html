@@ -13,11 +13,11 @@
         <!-- Tabla con bordes-->
         <TABLE BORDER>
             <TR>
-                <TH>ID</TH> <TH>Fecha</TH> <TH>Status</TH> 
+                <TH>ID</TH> <TH>Dueño</TH> <TH>Nombre mascota</TH> <TH>Fecha</TH> <TH>Status</TH> 
             </TR>
             {% for cita in citas %}
                 <TR>
-                    <TD>{{ cita['id'] }}</TD> <TD>{{ cita['fecha'] }}</TD> <TD>{{ cita['status'] }} </TD>
+                    <TD>{{ cita['id'] }}</TD> <TD>{{ cita['duenio'] }}</TD> <TD>{{ cita['nombre_mascota'] }}</TD> <TD>{{ cita['fecha'] }}</TD> <TD>{{ cita['status'] }} </TD>
                 </TR>
             {% endfor %}
         </TABLE>

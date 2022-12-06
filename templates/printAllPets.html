@@ -13,11 +13,11 @@
         <!-- Tabla con bordes-->
         <TABLE BORDER>
             <TR>
-                <TH>Nombre</TH> <TH>Raza</TH> <TH>Tipo</TH>
+                <TH>Nombre Dueño</TH> <TH>Nombre</TH> <TH>Raza</TH> <TH>Tipo</TH>
             </TR>
             {% for mascota in mascotas %}
                 <TR>
-                    <TD>{{ mascota['nombre'] }}</TD> <TD>{{ mascota['raza'] }}</TD> <TD>{{ mascota['tipo'] }} </TD>
+                    <TD>{{ mascota['Duenio'] }}</TD> <TD> {{ mascota['nombre'] }}</TD> <TD>{{ mascota['raza'] }}</TD> <TD>{{ mascota['tipo'] }} </TD>
                 </TR>
             {% endfor %}
         </TABLE>
