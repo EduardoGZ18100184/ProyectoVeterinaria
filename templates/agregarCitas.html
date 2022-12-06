@@ -18,7 +18,6 @@
                 <div class="card-body p-5 text-center">
                   
                   <!--<p> {{token}} </p>-->
-                  
 
                   <h3 class="mb-5">Ingrese los datos para su cita</h3>
                   
@@ -28,10 +27,29 @@
                       <input type="hidden" name="token" value = {{token}} id="typeEmailX-2" class="form-control form-control-lg" />
                     </div>
 
+                    <div class="form-outline mb-4">
+                      <input type="hidden" name="json" value = {{json}} id="typeEmailX-2" class="form-control form-control-lg" />
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="typePasswordX-2">Seleccione mascota</label>
+                      <select name="nombre">
+
+                        {% if json %}
+                          {% for mascota in json %}
+                          <option>{{ mascota['nombre'] }}</option>
+                          {% endfor %}
+                        {% endif %}
+                        
+                        </select>
+                    </div>
+
+                    <!--
                   <div class="form-outline mb-4">
                     <input type="tex" name="nombre" id="typeEmailX-2" class="form-control form-control-lg" />
                     <label class="form-label" for="typeEmailX-2">Mascota</label>
                   </div>
+                  -->
 
                   <div class="form-outline mb-4">
                     <input type="date" name="date" step="1" min="2023-01-01" max="2023-07-01" required/>

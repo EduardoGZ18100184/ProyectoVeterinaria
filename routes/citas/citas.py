@@ -42,6 +42,7 @@ def func_add_cita_view():
 def registro():
     token = request.form['token']
     nombreMascota = request.form['nombre']
+    json = request.form['json']
     #fechaCita = request.form['fecha']
 
     #ACTUALIZACION: Se recibe fecha y hora por separado para facil validacion
@@ -50,12 +51,12 @@ def registro():
     listaHorarios = ['19:00','18:00','17:00','16:00','15:00','14:00','13:00','12:00','11:00','10:00','09:00']
     if hora not in listaHorarios:
         mensaje="Horario no disponible"
-        return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+        return render_template('agregarCitas.html', token = token, mensaje = mensaje, json = json)
     
     fechaCita = fecha +' ' + hora
     if nombreMascota == '':
         mensaje = "Datos invalidos"
-        return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+        return render_template('agregarCitas.html', token = token, mensaje = mensaje, json = json)
     
     usuario = obtenerInfo(token)
     info_user = usuario['data']
@@ -65,7 +66,7 @@ def registro():
     searchDate = Cita.query.filter_by(fecha = fechaCita).first()
     if searchDate:
         mensaje="Horario no disponible"
-        return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+        return render_template('agregarCitas.html', token = token, mensaje = mensaje, json = json)
     
     if IdMascotadb is not None:
         mascotaId = IdMascotadb[0]
@@ -79,7 +80,7 @@ def registro():
             mensaje = "Error"
     else:
         mensaje="datos erroneos"    
-    return render_template('agregarCitas.html', token = token, mensaje = mensaje) 
+    return render_template('agregarCitas.html', token = token, mensaje = mensaje, json = json) 
 
 #Imprime todas las citas al recibir un token de usuario admin    #COMPLETADO
 @appcita.route('/citas') #get
