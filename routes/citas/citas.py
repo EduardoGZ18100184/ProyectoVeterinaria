@@ -15,10 +15,23 @@ appcita = Blueprint('appcita',__name__,template_folder="templates")
 def func_add_cita_view():
     token = request.args.get('token')
     #ACTUALIZACION: Permite mostrar en el imput del nombre de las mascotas el listado de las mascotas
-    
-    print("recibiendo token para verificar que el usuario no es admin y obtener el id")
-    print(token)
-    return render_template('agregarCitas.html', token = token) #render_template('appmascota.registro',token = token)
+    usuario = obtenerInfo(token)
+    info_user = usuario['data']
+    output = []
+    mensaje = ''
+    mascotas = Mascota.query.filter_by(user_id=info_user['user_id'])
+    if mascotas is not None:
+        for mascota in mascotas:
+            mascotaData = {}
+            mascotaData['nombre'] = mascota.nombre
+            output.append(mascotaData)
+    else:
+        mensaje = 'El usuario no tiene mascotas'
+        return render_template('agregarCitas.html', token = token, mensaje = mensaje)
+
+    # print("recibiendo token para verificar que el usuario no es admin y obtener el id")
+    # print(token)
+    return render_template('agregarCitas.html', token = token, mensaje = mensaje, json = output) #render_template('appmascota.registro',token = token)
 
 
 

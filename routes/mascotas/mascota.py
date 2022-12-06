@@ -76,10 +76,10 @@ def getCitasUser():
     token = request.args.get('token')
     usuario = obtenerInfo(token)
     info_user = usuario['data']
-    print(info_user)
-    print(type(info_user))
+    # print(info_user)
+    # print(type(info_user))
     mascotas = Mascota.query.filter_by(user_id=info_user['user_id'])
-    print(mascotas)
+    #print(mascotas)
     output = []
     if mascotas is not None:
         for mascota in mascotas:
